@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>App del Clima Loca</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-container">
+    <div class="weather-card">
+      <h1 class="app-title">El Clima Actual</h1>
+      <div class="form-container">
+        <form id="weatherForm">
+          <div class="input-group">
+            <input type="text" id="city" name="city" placeholder="Escribe tu ciudad..." required>
+            <button type="submit" class="submit-btn">
+              <span class="btn-text">Buscar</span>
+              <span class="btn-icon">🔍</span>
+            </button>
+          </div>
+        </form>
+      </div>
+      
+      <div id="loading" class="loading-container">
+        <div class="loader"></div>
+        <p class="loading-text">Consultando los cielos...</p>
+      </div>
+      
+      <div id="weatherResult" class="result-container">
+        <div class="city-header">
+          <h2 id="cityName" class="city-name"></h2>
+          <p id="emoji" class="weather-emoji"></p>
+        </div>
+        <div class="weather-details">
+          <div class="temperature-container">
+            <p id="temperature" class="temperature"></p>
+            <p id="feelsLike" class="feels-like"></p>
+          </div>
+          <div class="recommendation-box">
+            <p id="recommendation" class="recommendation"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
