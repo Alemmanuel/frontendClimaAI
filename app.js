@@ -10,7 +10,11 @@ document.getElementById("weatherForm").addEventListener("submit", async (event) 
   const recommendationElement = document.getElementById("recommendation");
   const emojiElement = document.getElementById("emoji");
   const cityNameElement = document.getElementById("cityName");
+  const countryNameElement = document.getElementById("countryName");
   const loadingElement = document.getElementById("loading");
+  const errorModal = document.getElementById("errorModal");
+  const errorMessage = document.getElementById("errorMessage");
+  const closeBtn = document.getElementsByClassName("close-btn")[0];
 
   // Show the loader
   loadingElement.style.display = "flex";
@@ -27,7 +31,7 @@ document.getElementById("weatherForm").addEventListener("submit", async (event) 
     });
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch weather information: ${response.status} ${response.statusText}`);
+      throw new Error(`City not found or misspelled`);
     }
 
     const data = await response.json();
@@ -38,9 +42,11 @@ document.getElementById("weatherForm").addEventListener("submit", async (event) 
     const feelsLike = data.data.feelsLike;
     const recommendation = data.data.recommendation;
     const emoji = data.data.emoji;
+    const country = data.data.country;
 
     // Update the UI with the data
     cityNameElement.textContent = city;
+    countryNameElement.textContent = country;
     temperatureElement.textContent = `${temperature}°C`;
     feelsLikeElement.textContent = `Feels Like: ${feelsLike}°C`;
     recommendationElement.textContent = recommendation;
@@ -51,12 +57,25 @@ document.getElementById("weatherForm").addEventListener("submit", async (event) 
     weatherResult.style.display = "block";
   } catch (error) {
     console.error("Error fetching weather information:", error);
-    alert(`Error fetching weather information: ${error.message}`);
+    errorMessage.textContent = "City not found or misspelled. Please try again.";
+    errorModal.style.display = "block";
     loadingElement.style.display = "none";
+  }
+
+  // Close the modal when the user clicks on <span> (x)
+  closeBtn.onclick = function() {
+    errorModal.style.display = "none";
+  }
+
+  // Close the modal when the user clicks anywhere outside of the modal
+  window.onclick = function(event) {
+    if (event.target == errorModal) {
+      errorModal.style.display = "none";
+    }
   }
 });
 
-// Función para calcular la sensación térmica (índice de calor)
+// Function to calculate heat index
 function calculateHeatIndex(temperature, humidity) {
   const tempF = (temperature * 9) / 5 + 32;
   let heatIndex = 0.5 * (tempF + 61.0 + (tempF - 68.0) * 1.2 + humidity * 0.094);
@@ -77,7 +96,7 @@ function calculateHeatIndex(temperature, humidity) {
   return Math.round(((heatIndex - 32) * 5) / 9);
 }
 
-// Función para traducir texto
+// Function to translate text
 async function translateText(text, fromLang, toLang) {
   try {
     const url = new URL("https://api.mymemory.translated.net/get");
@@ -93,6 +112,6 @@ async function translateText(text, fromLang, toLang) {
     return data.responseData.translatedText;
   } catch (error) {
     console.error("Error translating text:", error);
-    return text; // En caso de error, devolver el texto original
+    return text; // In case of error, return the original text
   }
 }

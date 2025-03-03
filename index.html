@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>App del Clima Loca</title>
+  <title>Weather App</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
@@ -11,13 +11,13 @@
 <body>
   <div class="app-container">
     <div class="weather-card">
-      <h1 class="app-title">El Clima Actual</h1>
+      <h1 class="app-title">Current Weather</h1>
       <div class="form-container">
         <form id="weatherForm">
           <div class="input-group">
-            <input type="text" id="city" name="city" placeholder="Escribe tu ciudad..." required>
+            <input type="text" id="city" name="city" placeholder="Enter your city..." required>
             <button type="submit" class="submit-btn">
-              <span class="btn-text">Buscar</span>
+              <span class="btn-text">Search</span>
               <span class="btn-icon">🔍</span>
             </button>
           </div>
@@ -26,12 +26,13 @@
       
       <div id="loading" class="loading-container">
         <div class="loader"></div>
-        <p class="loading-text">Consultando los cielos...</p>
+        <p class="loading-text">Checking the skies...</p>
       </div>
       
       <div id="weatherResult" class="result-container">
         <div class="city-header">
           <h2 id="cityName" class="city-name"></h2>
+          <p id="countryName" class="country-name"></p>
           <p id="emoji" class="weather-emoji"></p>
         </div>
         <div class="weather-details">
@@ -46,6 +47,15 @@
       </div>
     </div>
   </div>
+
+  <!-- Modal for error messages -->
+  <div id="errorModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      <p id="errorMessage"></p>
+    </div>
+  </div>
+
   <script src="app.js"></script>
 </body>
 </html>
